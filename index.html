@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<meta name="theme-color" content="#1a6e52">
+<title>Portfolio - Integration Engineer, Health Tech</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0ede6; --ink: #111410; --accent: #1a6e52; --accent2: #d4f0e3;
+  --muted: #7a7b74; --card: #e8e4db; --line: rgba(17,20,16,0.12); --pulse: #27ae6e;
+  --space-xs: clamp(8px,1.5vw,12px); --space-sm: clamp(12px,2vw,20px);
+  --space-md: clamp(20px,3vw,32px);  --space-lg: clamp(32px,5vw,64px);
+  --space-xl: clamp(48px,7vw,100px);
+  --pad-x: clamp(16px,5vw,80px); --pad-y: clamp(48px,8vw,120px);
+  --nav-h: clamp(56px,8vw,72px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:clamp(14px,1.5vw,16px);line-height:1.6;overflow-x:hidden;min-width:280px}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:50;opacity:0.4}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(30px,6vw,84px);line-height:1.05;letter-spacing:-0.02em;color:var(--ink);margin-bottom:var(--space-md)}
+h1 em{font-style:italic;color:var(--accent)}
+h2{font-family:'DM Serif Display',serif;font-size:clamp(26px,4vw,52px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:var(--space-sm)}
+h3{font-family:'DM Serif Display',serif;font-size:clamp(17px,2.2vw,26px);letter-spacing:-0.01em}
+.section-eyebrow{font-family:'DM Mono',monospace;font-size:clamp(9px,1.2vw,12px);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--space-xs);display:flex;align-items:center;gap:10px}
+.section-eyebrow::after{content:'';height:1px;width:36px;background:var(--accent);flex-shrink:0}
+.section-desc{font-size:clamp(13px,1.6vw,17px);color:var(--muted);max-width:560px;margin-bottom:var(--space-lg);line-height:1.75}
+.tag{font-family:'DM Mono',monospace;font-size:clamp(9px,1vw,11px);letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;background:var(--accent2);color:var(--accent);border-radius:100px;font-weight:500;white-space:nowrap}
+.btn-primary{padding:clamp(10px,1.5vw,14px) clamp(16px,2.5vw,28px);background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:clamp(13px,1.4vw,15px);font-weight:600;border-radius:4px;text-decoration:none;transition:background .2s,transform .15s;display:inline-block;white-space:nowrap}
+.btn-primary:hover{background:#145c43;transform:translateY(-1px)}
+.btn-outline{padding:clamp(10px,1.5vw,14px) clamp(16px,2.5vw,28px);background:transparent;color:var(--ink);border:1.5px solid var(--ink);cursor:pointer;font-family:'Instrument Sans',sans-serif;font-size:clamp(13px,1.4vw,15px);font-weight:600;border-radius:4px;text-decoration:none;transition:background .2s,transform .15s;display:inline-block;white-space:nowrap}
+.btn-outline:hover{background:var(--ink);color:var(--bg);transform:translateY(-1px)}
+.border-top{border-top:1px solid var(--line)}
+
+/* NAV */
+nav.main-nav{position:fixed;top:0;left:0;right:0;z-index:9000;height:var(--nav-h);padding:0 var(--pad-x);display:flex;justify-content:space-between;align-items:center;background:rgba(240,237,230,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:clamp(10px,1.3vw,13px);font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;flex-shrink:0}
+.nav-links{display:flex;gap:clamp(14px,2.2vw,36px);list-style:none;align-items:center}
+.nav-links a{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,12px);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;padding:8px;background:none;border:none;flex-shrink:0;width:40px;height:40px;position:relative;z-index:9001}
+.nav-burger span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s ease,opacity .3s ease;pointer-events:none}
+.nav-burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.is-open span:nth-child(2){opacity:0}
+.nav-burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* DRAWER */
+.nav-drawer{position:fixed;top:var(--nav-h);left:0;right:0;z-index:8900;background:var(--bg);border-bottom:2px solid var(--accent);box-shadow:0 8px 32px rgba(17,20,16,.12);overflow:hidden;max-height:0;transition:max-height .38s cubic-bezier(.4,0,.2,1)}
+.nav-drawer.is-open{max-height:600px}
+.nav-drawer-inner{padding:8px var(--pad-x) 20px}
+.nav-drawer a{font-family:'DM Mono',monospace;font-size:clamp(13px,3.5vw,15px);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:13px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;transition:color .2s}
+.nav-drawer a::before{content:'>';font-size:11px;color:var(--accent);opacity:0;transition:opacity .2s;flex-shrink:0}
+.nav-drawer a:hover::before,.nav-drawer a:active::before{opacity:1}
+.nav-drawer a:hover,.nav-drawer a:active{color:var(--ink)}
+.nav-drawer a:last-child{border-bottom:none}
+.nav-backdrop{position:fixed;inset:0;top:var(--nav-h);background:rgba(17,20,16,.35);z-index:8800;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.nav-backdrop.is-open{opacity:1;pointer-events:all}
+
+/* HERO */
+.hero{min-height:100svh;padding-top:calc(var(--nav-h) + var(--space-lg));padding-left:var(--pad-x);padding-right:var(--pad-x);padding-bottom:var(--space-xl);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);align-items:center;position:relative;overflow:hidden;max-width:1600px;margin:0 auto}
+.hero-bg-shape{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:clamp(200px,40vw,560px);height:clamp(200px,40vw,560px);border-radius:50% 30% 60% 40%/40% 60% 30% 50%;background:var(--accent2);opacity:.55;animation:morphBlob 8s ease-in-out infinite;z-index:0;pointer-events:none}
+@keyframes morphBlob{0%,100%{border-radius:50% 30% 60% 40%/40% 60% 30% 50%}33%{border-radius:30% 60% 40% 70%/60% 30% 70% 40%}66%{border-radius:60% 40% 30% 50%/30% 70% 40% 60%}}
+.hero-content{position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:clamp(9px,1.2vw,12px);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--space-md)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--pulse);flex-shrink:0;animation:livePulse 2s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero-sub{font-size:clamp(13px,1.8vw,17px);color:var(--muted);max-width:480px;margin-bottom:var(--space-lg);line-height:1.7}
+.hero-ctas{display:flex;gap:var(--space-sm);flex-wrap:wrap}
+.hero-stats{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2vw,20px)}
+.stat-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:clamp(14px,2.5vw,28px) clamp(12px,2vw,24px);transition:transform .2s;animation:fadeUp .6s ease both}
+.stat-card:hover{transform:translateY(-4px)}
+.stat-card:nth-child(1){animation-delay:.1s}.stat-card:nth-child(2){animation-delay:.2s}.stat-card:nth-child(3){animation-delay:.3s}.stat-card:nth-child(4){animation-delay:.4s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.stat-num{font-family:'DM Serif Display',serif;font-size:clamp(22px,3.5vw,42px);color:var(--accent);line-height:1;margin-bottom:5px}
+.stat-label{font-family:'DM Mono',monospace;font-size:clamp(8px,1vw,11px);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+section{padding:var(--pad-y) var(--pad-x);max-width:1400px;margin:0 auto}
+
+/* EXPERTISE */
+.expertise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.expertise-item{background:var(--bg);padding:clamp(22px,3.5vw,40px) clamp(18px,3vw,32px);transition:background .2s}
+.expertise-item:hover{background:var(--card)}
+.expertise-icon{font-size:clamp(20px,3vw,28px);margin-bottom:var(--space-sm);display:block}
+.expertise-item h3{font-size:clamp(15px,2vw,22px);margin-bottom:8px}
+.expertise-item p{font-size:clamp(12px,1.4vw,14px);color:var(--muted);line-height:1.65}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:clamp(22px,3.5vw,40px)}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--accent),transparent)}
+.timeline-item{position:relative;margin-bottom:clamp(32px,5vw,56px)}
+.timeline-item:last-child{margin-bottom:0}
+.timeline-dot{position:absolute;left:clamp(-28px,-3.5vw,-38px);top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent)}
+.timeline-dot.current{background:var(--pulse);box-shadow:0 0 0 4px rgba(39,174,110,.2);animation:dotPulse 2s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 4px rgba(39,174,110,.2)}50%{box-shadow:0 0 0 8px rgba(39,174,110,.08)}}
+.timeline-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.timeline-period{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,11px);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent2);padding:3px 10px;border-radius:100px}
+.timeline-location{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,11px);color:var(--muted)}
+.timeline-item h3{font-size:clamp(16px,2.2vw,24px);margin-bottom:4px}
+.timeline-company{font-size:clamp(12px,1.5vw,15px);font-weight:600;color:var(--accent);margin-bottom:12px}
+.timeline-body{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:clamp(16px,3vw,28px) clamp(14px,3vw,32px);margin-top:14px}
+.timeline-body p{font-size:clamp(12px,1.5vw,15px);color:var(--muted);line-height:1.75;margin-bottom:14px}
+.timeline-achievements{list-style:none;display:flex;flex-direction:column;gap:10px}
+.timeline-achievements li{font-size:clamp(12px,1.4vw,14px);color:var(--ink);padding-left:20px;position:relative;line-height:1.6}
+.timeline-achievements li::before{content:'>';position:absolute;left:0;color:var(--accent);font-size:12px}
+.timeline-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+
+/* PROJECTS */
+.projects-list{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line)}
+.project-row{background:var(--bg);padding:clamp(18px,3vw,36px) clamp(14px,3.5vw,40px);display:grid;grid-template-columns:clamp(32px,5vw,60px) 1fr auto;gap:clamp(12px,2.5vw,32px);align-items:center;transition:background .2s;cursor:pointer;text-decoration:none;color:inherit}
+.project-row:hover{background:var(--card)}
+.project-num{font-family:'DM Mono',monospace;font-size:clamp(10px,1.3vw,13px);color:var(--accent);font-weight:500}
+.project-info h3{font-size:clamp(15px,2vw,22px);margin-bottom:5px}
+.project-info p{font-size:clamp(12px,1.4vw,14px);color:var(--muted);line-height:1.55}
+.project-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+/* SKILLS */
+.skills-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+.skill-category h3{font-family:'DM Mono',monospace;font-size:clamp(10px,1.2vw,12px);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--space-md);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.skill-bars{display:flex;flex-direction:column;gap:14px}
+.skill-bar-item{display:flex;flex-direction:column;gap:6px}
+.skill-bar-label{display:flex;justify-content:space-between;font-size:clamp(12px,1.4vw,14px);font-weight:500}
+.skill-bar-label span:last-child{font-family:'DM Mono',monospace;font-size:clamp(10px,1.2vw,12px);color:var(--muted)}
+.skill-bar-track{height:6px;background:rgba(17,20,16,0.12);border-radius:3px;overflow:hidden}
+.skill-bar-fill{height:100%;background:var(--accent);border-radius:3px;transform:scaleX(0);transform-origin:left;transition:transform 1s cubic-bezier(.23,1,.32,1)}
+.skill-bar-fill.animate{transform:scaleX(1)}
+.tech-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--space-md)}
+.tech-pill{font-family:'DM Mono',monospace;font-size:clamp(10px,1.2vw,12px);padding:6px 12px;border:1.5px solid var(--line);border-radius:100px;color:var(--muted);transition:border-color .2s,color .2s;cursor:default}
+.tech-pill:hover{border-color:var(--accent);color:var(--accent)}
+
+/* RESUME */
+.resume-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+.resume-preview{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.resume-preview-header{background:var(--accent);padding:clamp(20px,3.5vw,36px);color:white}
+.resume-preview-header h3{font-family:'DM Serif Display',serif;font-size:clamp(18px,2.8vw,28px);margin-bottom:4px;color:white}
+.resume-preview-header p{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,12px);letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.resume-preview-body{padding:clamp(18px,3vw,36px)}
+.resume-section-mini{margin-bottom:22px}
+.resume-section-mini h4{font-family:'DM Mono',monospace;font-size:clamp(8px,1.1vw,10px);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.resume-line{height:8px;background:var(--line);border-radius:4px;margin-bottom:8px}
+.resume-line.short{width:60%}.resume-line.shorter{width:40%}.resume-line.medium{width:80%}
+.resume-download-area{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,28px)}
+.resume-download-area h3{font-family:'DM Serif Display',serif;font-size:clamp(22px,3vw,38px);letter-spacing:-.02em;line-height:1.15}
+.resume-download-area > p{font-size:clamp(12px,1.5vw,15px);color:var(--muted);line-height:1.75}
+.download-options{display:flex;flex-direction:column;gap:10px}
+.download-btn{display:flex;align-items:center;gap:14px;padding:clamp(12px,2vw,18px) clamp(14px,2.5vw,24px);border-radius:10px;text-decoration:none;border:1.5px solid var(--line);background:var(--bg);transition:all .2s;cursor:pointer}
+.download-btn:hover{border-color:var(--accent);background:var(--accent2);transform:translateX(4px)}
+.download-btn-icon{width:clamp(32px,4vw,40px);height:clamp(32px,4vw,40px);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:clamp(14px,1.8vw,18px);flex-shrink:0}
+.download-btn-icon.pdf-icon{background:#fee2e2}.download-btn-icon.doc-icon{background:#dbeafe}.download-btn-icon.txt-icon{background:var(--accent2)}
+.download-btn-info{flex:1;min-width:0}
+.download-btn-info strong{display:block;font-size:clamp(12px,1.5vw,15px);font-weight:600;margin-bottom:2px}
+.download-btn-info span{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,11px);color:var(--muted);letter-spacing:.05em}
+.download-btn-arrow{font-size:18px;color:var(--accent);opacity:0;transition:opacity .2s,transform .2s;flex-shrink:0}
+.download-btn:hover .download-btn-arrow{opacity:1;transform:translateX(4px)}
+.resume-last-updated{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,11px);color:var(--muted);letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.resume-last-updated::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--pulse);flex-shrink:0}
+
+/* ABOUT */
+#about{border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,80px);align-items:center;max-width:1400px;margin:0 auto;padding:var(--pad-y) var(--pad-x)}
+.about-card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(24px,4vw,48px) clamp(20px,3.5vw,40px);position:relative;overflow:hidden}
+.about-card-main::before{content:'';position:absolute;top:-40px;right:-40px;width:clamp(80px,15vw,160px);height:clamp(80px,15vw,160px);border-radius:50%;background:var(--accent2);opacity:.6}
+.avatar-placeholder{width:clamp(50px,7vw,80px);height:clamp(50px,7vw,80px);background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:clamp(20px,3vw,32px);color:white;margin-bottom:var(--space-md);position:relative;z-index:1}
+.about-card-main h3{font-size:clamp(17px,2.5vw,26px);margin-bottom:4px;position:relative;z-index:1}
+.role-label{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,12px);color:var(--accent);letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:1;margin-bottom:var(--space-md)}
+.cert-badges{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.cert-badge{font-family:'DM Mono',monospace;font-size:clamp(8px,1vw,10px);letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;background:var(--accent);color:#fff;border-radius:4px}
+.about-text p{font-size:clamp(13px,1.5vw,16px);color:var(--muted);line-height:1.8;margin-bottom:var(--space-sm)}
+.about-text p strong{color:var(--ink)}
+
+/* CONTACT */
+#contact{border-top:1px solid var(--line);text-align:center;max-width:720px;margin:0 auto;padding:var(--pad-y) var(--pad-x)}
+#contact h2{margin-bottom:var(--space-sm)}
+#contact > p{font-size:clamp(13px,1.7vw,17px);color:var(--muted);margin-bottom:var(--space-lg);line-height:1.7}
+.contact-links{display:flex;justify-content:center;gap:var(--space-sm);flex-wrap:wrap}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:clamp(18px,3vw,32px) var(--pad-x);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+footer p{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,12px);color:var(--muted);letter-spacing:.05em}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* PROJECT MODAL */
+.project-row {
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
+}
+.project-arrow {
+  font-size: 18px;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.project-row:hover .project-arrow { opacity: 1; transform: translate(3px,-3px); }
+.project-row:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.proj-overlay {
+  position: fixed; inset: 0; z-index: 9500;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(12px,4vw,40px);
+  background: rgba(17,20,16,0.6);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.proj-overlay.is-open { opacity: 1; pointer-events: all; }
+.proj-modal {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 20px;
+  width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.32s cubic-bezier(0.23,1,0.32,1);
+  box-shadow: 0 32px 80px rgba(17,20,16,0.2);
+}
+.proj-overlay.is-open .proj-modal { transform: translateY(0) scale(1); }
+.proj-modal-header {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+  padding: clamp(24px,4vw,40px) clamp(24px,4vw,40px) 0;
+  position: sticky; top: 0; background: var(--bg); z-index: 1;
+  padding-bottom: 20px; border-bottom: 1px solid var(--line);
+}
+.proj-modal-num { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.proj-modal-title { font-family: 'DM Serif Display', serif; font-size: clamp(20px,3.5vw,32px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 6px; color: var(--ink); }
+.proj-modal-company { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.proj-modal-close { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s; margin-top: 4px; }
+.proj-modal-close:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.proj-modal-body { padding: clamp(20px,3vw,32px) clamp(24px,4vw,40px) clamp(28px,4vw,44px); display: flex; flex-direction: column; gap: 24px; }
+.proj-modal-overview { font-size: clamp(14px,1.6vw,16px); color: var(--muted); line-height: 1.8; }
+.proj-modal-section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.proj-modal-section-label::after { content: ''; height: 1px; flex: 1; background: var(--line); }
+.proj-modal-achievements ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.proj-modal-achievements li { font-size: clamp(13px,1.5vw,15px); color: var(--ink); padding-left: 22px; position: relative; line-height: 1.65; }
+.proj-modal-achievements li::before { content: '>'; position: absolute; left: 0; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px; top: 3px; }
+.proj-modal-tags { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 20px; border-top: 1px solid var(--line); }
+.proj-modal::-webkit-scrollbar { width: 6px; }
+.proj-modal::-webkit-scrollbar-track { background: transparent; }
+.proj-modal::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+
+/* EDUCATION */
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 2.5vw, 28px); margin-top: var(--space-lg); }
+.edu-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: clamp(24px, 3.5vw, 40px) clamp(20px, 3vw, 32px); position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.edu-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(17,20,16,0.1); }
+.edu-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); opacity: 0.6; }
+.edu-card.featured::before { opacity: 1; background: linear-gradient(90deg, var(--accent), var(--pulse)); }
+.edu-degree-type { font-family: 'DM Mono', monospace; font-size: clamp(8px, 1vw, 10px); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.edu-degree-badge { background: var(--accent2); color: var(--accent); padding: 2px 8px; border-radius: 100px; font-size: clamp(7px, 0.9vw, 9px); font-weight: 600; letter-spacing: 0.08em; }
+.edu-card h3 { font-family: 'DM Serif Display', serif; font-size: clamp(15px, 2vw, 21px); line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.01em; }
+.edu-institution { font-family: 'Instrument Sans', sans-serif; font-size: clamp(12px, 1.4vw, 14px); font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+.edu-location { font-family: 'DM Mono', monospace; font-size: clamp(9px, 1.1vw, 11px); color: var(--muted); letter-spacing: 0.05em; margin-bottom: var(--space-md); }
+.edu-grade { display: inline-flex; align-items: center; gap: 6px; background: var(--bg); border: 1px solid var(--line); border-radius: 100px; padding: 4px 12px; font-family: 'DM Mono', monospace; font-size: clamp(9px, 1.1vw, 11px); color: var(--ink); letter-spacing: 0.05em; }
+.edu-grade::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pulse); flex-shrink: 0; }
+
+/* ════════════════════════════════════════════════════════
+   MIRTH TUTORIAL CTA CARD (links to separate page)
+   ════════════════════════════════════════════════════════ */
+
+.mirth-hero-banner {
+  background: linear-gradient(135deg, var(--accent) 0%, #0d4a38 100%);
+  border-radius: 20px;
+  padding: clamp(32px,5vw,64px) clamp(24px,4vw,48px);
+  margin-bottom: var(--space-md);
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  transition: transform .2s, box-shadow .2s;
+}
+.mirth-hero-banner:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(17,20,16,0.18); }
+.mirth-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -20%;
+  width: 60%; height: 200%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.mirth-hero-banner h2 { color: #fff; font-size: clamp(28px,5vw,56px); margin-bottom: 12px; }
+.mirth-hero-banner p { color: rgba(255,255,255,0.8); font-size: clamp(14px,1.8vw,18px); max-width: 640px; line-height: 1.7; }
+.mirth-version-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(10px,1.2vw,13px);
+  letter-spacing: .08em;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+/* BREAKPOINTS */
+@media(max-width:1200px){.expertise-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){.nav-links{gap:clamp(10px,1.8vw,22px)}.project-row{grid-template-columns:38px 1fr}.project-tags{display:none}.expertise-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .nav-links{display:none}.nav-burger{display:flex}
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:calc(var(--nav-h) + var(--space-md))}
+  .hero-bg-shape{display:none}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .expertise-grid{grid-template-columns:repeat(2,1fr)}
+  .project-row{grid-template-columns:34px 1fr;gap:12px}.project-tags{display:none}
+  .skills-wrapper{grid-template-columns:1fr;gap:var(--space-lg)}
+  #about{grid-template-columns:1fr}
+  .resume-wrapper{grid-template-columns:1fr}
+  .contact-links{flex-direction:column;align-items:center}
+  .contact-links a{width:100%;max-width:320px;text-align:center}
+  footer{flex-direction:column;text-align:center;gap:8px}
+}
+@media(max-width:600px){
+  #fhir-platform [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}.expertise-grid{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(2,1fr);gap:10px}.timeline{padding-left:24px}.timeline-dot{left:-30px}.timeline-body{padding:16px 18px}.about-card-main{padding:22px 18px}.resume-preview-header{padding:20px}.resume-preview-body{padding:18px 20px}.edu-grid{grid-template-columns:1fr}}
+@media(max-width:480px){:root{--pad-x:16px}h1{font-size:clamp(26px,9vw,38px)}h2{font-size:clamp(22px,7.5vw,32px)}.hero-ctas{flex-direction:column}.hero-ctas a{width:100%;text-align:center}.hero-stats{gap:10px}.stat-num{font-size:clamp(20px,7vw,28px)}.timeline-meta{flex-direction:column;align-items:flex-start;gap:5px}.nav-logo{font-size:10px}}
+@media(max-width:360px){:root{--pad-x:12px}h1{font-size:clamp(22px,9vw,30px)}.hero-stats{gap:8px}.stat-num{font-size:20px}.expertise-grid{grid-template-columns:1fr}.project-row{grid-template-columns:28px 1fr;gap:8px}.cert-badges{flex-direction:column}.nav-logo{font-size:9px}.download-btn-info span{display:none}.timeline{padding-left:18px}.timeline-dot{left:-24px;width:10px;height:10px}}
+@media(hover:none) and (pointer:coarse){.btn-primary:hover,.btn-outline:hover{transform:none}.stat-card:hover{transform:none}.expertise-item:hover{background:var(--bg)}.project-row:hover{background:var(--bg)}.download-btn:hover{transform:none}.tech-pill:hover{border-color:var(--line);color:var(--muted)}.download-btn-arrow{opacity:1}.nav-drawer a{min-height:48px}.btn-primary,.btn-outline{min-height:48px;display:inline-flex;align-items:center;justify-content:center}.download-btn{min-height:56px}.edu-card:hover{transform:none;box-shadow:none}}
+@media print{nav.main-nav,.nav-drawer,.nav-backdrop,.hero-bg-shape{display:none!important}body{font-size:11pt;color:#000;background:#fff}h1,h2,h3{color:#000}.reveal{opacity:1!important;transform:none!important}section,#about,#contact{padding:20pt 0!important;max-width:100%!important}.expertise-grid{grid-template-columns:repeat(2,1fr)}.skills-wrapper,.resume-wrapper{grid-template-columns:1fr 1fr}#about{grid-template-columns:1fr 1fr!important}.timeline{padding-left:16pt}footer{border-top:1pt solid #ccc}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+@media(forced-colors:active){.tag,.cert-badge,.timeline-period{border:1px solid ButtonText}.download-btn{border:1px solid ButtonText}.skill-bar-fill{forced-color-adjust:none;background:Highlight}}
+@media(max-width:900px){.edu-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION (updated with Mirth Tutorial link)
+     ═══════════════════════════════════════════ -->
+<nav class="main-nav">
+  <div class="nav-logo">[ Integration Engineer ]</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Top</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#mirth-tutorial">Mirth Tutorial</a></li>
+    <li><a href="#fhir-platform">FHIR Platform</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-burger" id="navBurger" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <div class="nav-drawer-inner">
+    <a href="#hero" class="drawer-link">Top</a>
+    <a href="#expertise" class="drawer-link">Expertise</a>
+    <a href="#experience" class="drawer-link">Experience</a>
+    <a href="#projects" class="drawer-link">Projects</a>
+    <a href="#mirth-tutorial" class="drawer-link">Mirth Tutorial</a>
+    <a href="#fhir-platform" class="drawer-link">FHIR Platform</a>
+    <a href="#skills" class="drawer-link">Skills</a>
+    <a href="#education" class="drawer-link">Education</a>
+    <a href="#about" class="drawer-link">About</a>
+    <a href="#resume" class="drawer-link">Resume</a>
+    <a href="#contact" class="drawer-link">Contact</a>
+  </div>
+</div>
+<div class="nav-backdrop" id="navBackdrop"></div>
+
+<!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
+<div id="hero" class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span class="live-dot"></span>Available for new engagements</div>
+    <h1>Connecting<br><em>Health Systems</em><br>That Matter.</h1>
+    <p class="hero-sub">Integration Engineer specialising in interoperability, HL7 &amp; FHIR, and seamless data pipelines across clinical, EHR, and health-tech ecosystems.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#mirth-tutorial" class="btn-outline">Mirth Connect Guide</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num">1+</div><div class="stat-label">Years in Health Tech</div></div>
+    <div class="stat-card"><div class="stat-num">25+</div><div class="stat-label">System Integrations Delivered</div></div>
+    <div class="stat-card"><div class="stat-num">$300k+</div><div class="stat-label">Revenue Generated</div></div>
+    <div class="stat-card"><div class="stat-num">HL7 &amp; FHIR</div><div class="stat-label">Specialist</div></div>
+  </div>
+  <div class="hero-bg-shape" aria-hidden="true"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════ EXPERTISE ═══════════════════════════════════════════ -->
+<section id="expertise" class="border-top">
+  <div class="section-eyebrow reveal">Core Disciplines</div>
+  <h2 class="reveal">What I Do</h2>
+  <p class="section-desc reveal">End-to-end healthcare integration delivery &mdash; from HL7 interface design and EMR implementation to data quality, AI readiness, and stakeholder-aligned project delivery.</p>
+  <div class="expertise-grid reveal">
+    <div class="expertise-item"><span class="expertise-icon">&#9889;</span><h3>HL7 &amp; Healthcare Interoperability</h3><p>Hands-on delivery of HL7 v2.5 integrations (ADT, ORU, ORM, DFT, SIU) across lab, EMR, PACS/RIS, and LIS environments using JSON, XML, and CSV over API, SFTP, VPN, and TCP/IP connectivity with hands-on exposure to HL7 FHIR (R4) through self-driven projects, with practical familiarity in resource modeling, API-based data exchange, and a solid understanding of US healthcare interoperability standards.</p></div>
+    <div class="expertise-item"><span class="expertise-icon">&#127973;</span><h3>EMR &amp; Lab Interface Implementation</h3><p>End-to-end implementation of complex lab and EMR interface projects across 25+ provider facilities using Allscripts, Mirth Connect, and proprietary integration engines in multi-solution environments.</p></div>
+    <div class="expertise-item"><span class="expertise-icon">&#128202;</span><h3>Data Analysis &amp; Engineering</h3><p>ETL pipeline design, SQL-driven data validation, and healthcare data quality assurance for AI model training. Experienced with Python, Pandas, NumPy, and ML foundations including Decision Tree and NLP techniques.</p></div>
+    <div class="expertise-item"><span class="expertise-icon">&#128737;</span><h3>HIPAA, GDPR &amp; Compliance</h3><p>Applying HIPAA and GDPR data-protection requirements across integration projects, with structured QA workflows, change control governance, and audit-ready documentation standards.</p></div>
+    <div class="expertise-item"><span class="expertise-icon">&#128101;</span><h3>Stakeholder &amp; Partner Delivery</h3><p>Client-facing technical lead with experience in partner onboarding, vendor specification analysis, escalation handling, and business requirements gathering across cross-functional healthcare teams.</p></div>
+    <div class="expertise-item"><span class="expertise-icon">&#128269;</span><h3>QA, Validation &amp; Production Support</h3><p>Interoperability QA, HL7 message validation, SQL root-cause analysis, and production troubleshooting &mdash; sustaining 99%+ uptime and reducing escalations by 30% across live healthcare environments.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ EXPERIENCE ═══════════════════════════════════════════ -->
+<section id="experience" class="border-top">
+  <div class="section-eyebrow reveal">Career History</div>
+  <h2 class="reveal">Experience</h2>
+  <p class="section-desc reveal">Healthcare integration specialist with hands-on experience across EMR implementation, data annotation, and data science &mdash; delivering real results in clinical and AI-driven environments.</p>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta"><span class="timeline-period">Oct 2024 &mdash; Present</span><span class="timeline-location">&#128205; Hammersmith, UK</span></div>
+      <h3>Data Annotation Specialist</h3>
+      <div class="timeline-company">Sigma AI Data Ltd</div>
+      <div class="timeline-body">
+        <p>Led live data interpretation and annotation for AI training datasets, strengthening data integrity pipelines directly transferable to healthcare data quality validation.</p>
+        <ul class="timeline-achievements">
+          <li>Led live data interpretation using annotation systems, maintaining an error rate below 5%.</li>
+          <li>Enhanced dataset integrity for AI training, improving reliability by over 40% across projects.</li>
+          <li>Optimised audio annotation with data classification and tagging, processing 2,500 files daily.</li>
+          <li>Achieved 98% transcription accuracy, reducing project turnaround times by 30%.</li>
+          <li>Strengthened data integrity pipelines used for AI model training, directly transferable to healthcare data quality validation for AI readiness.</li>
+        </ul>
+        <div class="timeline-tags"><span class="tag">Data Annotation</span><span class="tag">AI Training Data</span><span class="tag">Data Classification</span><span class="tag">Audio Annotation</span><span class="tag">Data Quality</span></div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot current"></div>
+      <div class="timeline-meta"><span class="timeline-period">Feb 2025 &mdash; Mar 2025</span><span class="timeline-location">&#128205; Remote, UK</span></div>
+      <h3>Intern &mdash; Data Science</h3>
+      <div class="timeline-company">Prodigy InfoTech</div>
+      <div class="timeline-body">
+        <p>Applied data science and machine learning techniques to real-world datasets, building end-to-end ETL and ML pipelines with direct relevance to AI-enabled healthcare platforms.</p>
+        <ul class="timeline-achievements">
+          <li>Extracted, transformed, and loaded structured data for analysis, ensuring high data integrity and accuracy.</li>
+          <li>Visualised cleaned data using Python, Pandas, NumPy, Matplotlib, and Seaborn to analyse population distribution across 100+ countries.</li>
+          <li>Applied a Decision Tree Classifier on demographic and behavioural data to predict customer purchases with 85% accuracy.</li>
+          <li>Performed sentiment analysis using Python and basic NLP techniques to assess social media opinions on specific topics.</li>
+          <li>Built ETL and ML pipelines to analyse, validate, and optimise large datasets, reinforcing ability to support AI-enabled healthcare platforms downstream of integration layers.</li>
+        </ul>
+        <div class="timeline-tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Machine Learning</span><span class="tag">NLP</span><span class="tag">ETL</span></div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta"><span class="timeline-period">Feb 2022 &mdash; Dec 2022</span><span class="timeline-location">&#128205; Hyderabad, India</span></div>
+      <h3>Implementation Engineer</h3>
+      <div class="timeline-company">Sutherland Healthcare Solutions</div>
+      <div class="timeline-body">
+        <p>Led end-to-end implementation of complex lab and EMR interface projects across 25+ provider facilities, installing and configuring proprietary healthcare software remotely within multi-solution environments.</p>
+        <ul class="timeline-achievements">
+          <li>Owned full lifecycle interface delivery including requirements gathering, project planning, HL7 message mapping (ADT, ORU, ORM, DFT, SIU), and validation using JSON, XML, and CSV formats over API, SFTP, VPN, and TCP/IP connectivity.</li>
+          <li>Performed SQL-driven root-cause analysis and interoperability QA, improving data quality, reducing production escalations by 30%, and sustaining 99%+ uptime.</li>
+          <li>Standardised business requirement documentation, interface mapping artifacts, QA checklists, and change control logs, reducing onboarding timelines by 25% and ensuring audit-ready maintenance handoff.</li>
+          <li>Acted as primary client-facing technical lead and architecture advisor, managing escalations, aligning stakeholders, and improving integration efficiency by 40%, contributing $300K+ in revenue.</li>
+        </ul>
+        <div class="timeline-tags"><span class="tag">HL7 v2.5</span><span class="tag">Allscripts EMR</span><span class="tag">Advanced MS Excel</span><span class="tag">JSON / XML</span><span class="tag">SQL</span><span class="tag">SFTP / VPN</span><span class="tag">HIPAA</span></div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta"><span class="timeline-period">Apr 2021 &mdash; Jul 2021</span><span class="timeline-location">&#128205; Bangalore, India</span></div>
+      <h3>Data Analyst</h3>
+      <div class="timeline-company">Kantar Analytics Practice</div>
+      <div class="timeline-body">
+        <p>Analysed marketing campaigns and applied statistical modelling to deliver actionable insights, improving ROI and brand performance across multiple industries.</p>
+        <ul class="timeline-achievements">
+          <li>Analysed marketing campaigns using data assessment, increasing sales by 12% and 8% across industries.</li>
+          <li>Applied advanced Excel functions and statistical analysis to improve Marketing Mix Model accuracy by 20%.</li>
+          <li>Optimised marketing ROI by $500K through strategic budget reallocations based on identified KPIs.</li>
+          <li>Delivered actionable insights that enhanced strategic decision-making and boosted brand awareness by 15%.</li>
+        </ul>
+        <div class="timeline-tags"><span class="tag">Data Analysis</span><span class="tag">Statistical Modelling</span><span class="tag">Excel</span><span class="tag">Marketing Mix Model</span><span class="tag">KPI Analysis</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ PROJECTS ═══════════════════════════════════════════ -->
+<section id="projects" class="border-top">
+  <div class="section-eyebrow reveal">Selected Work</div>
+  <h2 class="reveal">Projects</h2>
+  <p class="section-desc reveal">A selection of integration challenges solved across the health tech landscape. Click any project to view full details.</p>
+  <div class="projects-list reveal">
+    <button class="project-row" data-project="0">
+      <div class="project-num">01</div>
+      <div class="project-info"><h3>Healthcare EMR Integration &mdash; Allscripts Implementation</h3><p>Delivered healthcare EMR integrations enabling real-time clinical and EDI-aligned administrative data exchange across 15+ provider sites.</p></div>
+      <div class="project-tags"><span class="tag">HL7</span><span class="tag">EMR</span><span class="tag">PACS/RIS</span><span class="tag">SQL</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+    <button class="project-row" data-project="1">
+      <div class="project-num">02</div>
+      <div class="project-info"><h3>Strategic EHR Interoperability &amp; Vendor Alignment</h3><p>Analysed vendor specifications and business requirements to design HL7 interfaces aligned with healthcare EDI and interoperability workflows.</p></div>
+      <div class="project-tags"><span class="tag">HL7</span><span class="tag">Vendor Specs</span><span class="tag">QA Testing</span><span class="tag">SQL</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+    <button class="project-row" data-project="2">
+      <div class="project-num">03</div>
+      <div class="project-info"><h3>Mirth Connect 4.5.2: Real-Time HL7 Pipeline</h3><p>Designed Mirth Connect 4.5.2 hub for real-time HL7 (ADT/ORU) validation, XML/CSV/PDF transformation, channel-to-channel routing, error recovery, and metadata filtering.</p></div>
+      <div class="project-tags"><span class="tag">Mirth Connect 4.5.2</span><span class="tag">HL7</span><span class="tag">XML/CSV/PDF</span><span class="tag">TCP/IP</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+    <button class="project-row" data-project="3">
+      <div class="project-num">04</div>
+      <div class="project-info"><h3>AI Training Data Pipeline &mdash; Healthcare QA Readiness</h3><p>Strengthened data integrity pipelines for AI model training, achieving 98% transcription accuracy and processing 2,500 annotation files daily.</p></div>
+      <div class="project-tags"><span class="tag">Python</span><span class="tag">AI Data</span><span class="tag">Annotation</span><span class="tag">QA</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+    <button class="project-row" data-project="4">
+      <div class="project-num">05</div>
+      <div class="project-info"><h3>ETL &amp; ML Pipeline &mdash; Population Data Analysis</h3><p>Built end-to-end ETL and ML pipelines to analyse population distribution across 100+ countries, with a Decision Tree Classifier at 85% accuracy.</p></div>
+      <div class="project-tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">ML</span><span class="tag">NLP</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+    <button class="project-row" data-project="5">
+      <div class="project-num">06</div>
+      <div class="project-info"><h3>Marketing Mix Modelling &amp; Campaign Analytics</h3><p>Applied statistical analysis to improve Marketing Mix Model accuracy by 20%, optimising $500K in marketing ROI through data-driven KPI analysis.</p></div>
+      <div class="project-tags"><span class="tag">Excel</span><span class="tag">Statistics</span><span class="tag">KPI</span><span class="tag">Analytics</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+    <button class="project-row" data-project="6">
+      <div class="project-num">07</div>
+      <div class="project-info"><h3>FHIR R4 &mdash; Self-Driven Learning &amp; Implementation Exploration</h3><p>Independently designed and built a two-platform, browser-based FHIR R4 practice environment demonstrating end-to-end clinical order and result workflows using real HL7-validated resources.</p></div>
+      <div class="project-tags"><span class="tag">FHIR R4</span><span class="tag">HL7</span><span class="tag">US Core</span><span class="tag">REST APIs</span><span class="tag">JSON</span></div>
+      <span class="project-arrow">&#8599;</span>
+    </button>
+  </div>
+</section>
+
+<!-- PROJECT MODAL OVERLAY -->
+<div class="proj-overlay" id="projOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="projModalTitle">
+  <div class="proj-modal">
+    <div class="proj-modal-header">
+      <div>
+        <div class="proj-modal-num" id="projModalNum"></div>
+        <h2 class="proj-modal-title" id="projModalTitle"></h2>
+        <div class="proj-modal-company" id="projModalCompany"></div>
+      </div>
+      <button class="proj-modal-close" id="projModalClose" aria-label="Close project details">&times;</button>
+    </div>
+    <div class="proj-modal-body">
+      <div class="proj-modal-overview" id="projModalOverview"></div>
+      <div class="proj-modal-achievements">
+        <div class="proj-modal-section-label">Key Achievements</div>
+        <ul id="projModalAchievements"></ul>
+      </div>
+      <div class="proj-modal-tags" id="projModalTags"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     MIRTH CONNECT TUTORIAL CTA — Links to separate tutorial page
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section id="mirth-tutorial" class="border-top">
+  <div class="section-eyebrow reveal">Technical Guide</div>
+  <h2 class="reveal">Mirth Connect <em style="font-style:italic;color:var(--accent)">4.5.2</em> Tutorial</h2>
+  <p class="section-desc reveal">A comprehensive, hands-on guide covering everything from installation and channel architecture to message transformations, data conversions, error handling, and production operations.</p>
+
+  <div class="mirth-hero-banner reveal" style="cursor:pointer;" onclick="window.location.href='404.html';">
+    <div class="mirth-version-badge">Version 4.5.2 &middot; 20 Chapters</div>
+    <h2>Mirth Connect<br>Integration Guide</h2>
+    <p>Channels, Filters, Transformers, HL7/JSON/XML/CSV/PDF conversions, JavaScript code samples, error handling, queue management, regex patterns, and more &mdash; all in one place.</p>
+    <div style="margin-top:clamp(16px,2.5vw,28px);display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="404.html" class="btn-primary" style="background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.4);color:#fff;" onclick="event.stopPropagation();">Open Full Tutorial &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Quick topic preview grid -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:var(--space-lg);" class="reveal">
+    <a href="mirth-tutorial.html#mc-ch1" style="text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;">01</span>
+      <div style="font-size:clamp(13px,1.4vw,15px);font-weight:600;margin-top:6px;color:var(--ink);">Installation &amp; Dashboard</div>
+    </a>
+    <a href="mirth-tutorial.html#mc-ch7" style="text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;">07</span>
+      <div style="font-size:clamp(13px,1.4vw,15px);font-weight:600;margin-top:6px;color:var(--ink);">Filters &amp; Rules</div>
+    </a>
+    <a href="mirth-tutorial.html#mc-ch10" style="text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;">10</span>
+      <div style="font-size:clamp(13px,1.4vw,15px);font-weight:600;margin-top:6px;color:var(--ink);">Data Conversions</div>
+    </a>
+    <a href="mirth-tutorial.html#mc-ch14" style="text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;">14</span>
+      <div style="font-size:clamp(13px,1.4vw,15px);font-weight:600;margin-top:6px;color:var(--ink);">HL7 JavaScript Editing</div>
+    </a>
+    <a href="mirth-tutorial.html#mc-ch17" style="text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;">17</span>
+      <div style="font-size:clamp(13px,1.4vw,15px);font-weight:600;margin-top:6px;color:var(--ink);">Queues &amp; Retry Logic</div>
+    </a>
+    <a href="mirth-tutorial.html#mc-ch20" style="text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;">20</span>
+      <div style="font-size:clamp(13px,1.4vw,15px);font-weight:600;margin-top:6px;color:var(--ink);">Mini Project</div>
+    </a>
+  </div>
+</section>
+
+<section id="fhir-platform" class="border-top">
+  <div class="section-eyebrow reveal">Open Source</div>
+  <h2 class="reveal">FHIR R4 <em style="font-style:italic;color:var(--accent)">Learning Platform</em></h2>
+  <p class="section-desc reveal">A fully browser-based FHIR R4 practice environment — no install, no backend, no server required. Send real clinical orders from a simulated EHR, receive and report results on a simulated lab/vendor platform, and validate resources against the official HL7 FHIR validator. Built for students, developers, and interoperability engineers learning US healthcare standards.</p>
+
+  <!-- Hero banner — same style as Mirth Tutorial -->
+  <div class="mirth-hero-banner reveal" style="cursor:pointer;" onclick="window.open('fhir_platform_main_page.html','_blank');">
+    <div class="mirth-version-badge">FHIR R4 &middot; US Core 6.1 &middot; Zero Backend</div>
+    <h2>FHIR Platform Suite</h2>
+    <p>Two-tab simulation — Client Platform sends FHIR ServiceRequests, Vendor Platform receives orders and returns DiagnosticReport Bundles with Observations. Validate resources live against hapi.fhir.org. Covers LOINC &middot; SNOMED CT &middot; ICD-10 &middot; RxNorm &middot; CPT &middot; RadLex.</p>
+    <div style="margin-top:clamp(16px,2.5vw,28px);display:flex;gap:12px;flex-wrap:wrap;">
+      <a href="fhir_platform_main_page.html" class="btn-primary" style="background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.4);color:#fff;" target="_blank" rel="noopener" onclick="event.stopPropagation();">Open Platform &rarr;</a>
+      <a href="https://github.com/JyThakur/fhir-platform-sandbox" class="btn-primary" style="background:rgba(255,255,255,0.10);border:1.5px solid rgba(255,255,255,0.25);color:#fff;" target="_blank" rel="noopener" onclick="event.stopPropagation();">GitHub &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Two platform cards -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:var(--space-lg);" class="reveal">
+
+    <a href="fhir-client-platform.html" target="_blank" rel="noopener"
+       style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px);
+              text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:all .2s;"
+       onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'"
+       onmouseout="this.style.borderColor='';this.style.transform=''">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:38px;height:38px;background:var(--accent2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6"/></svg>
+        </div>
+        <div style="font-size:clamp(14px,1.6vw,16px);font-weight:600;color:var(--ink);">Client Platform</div>
+        <span style="margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.08em;">EHR / CLINICIAN</span>
+      </div>
+      <p style="font-size:clamp(12px,1.3vw,13px);color:var(--muted);line-height:1.6;">Create FHIR ServiceRequests in form, JSON, or XML mode. Send orders to the vendor platform in real time. Receive DiagnosticReport results with observation tables and abnormal flags.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="tag">ServiceRequest</span><span class="tag">Patient</span><span class="tag">Observations</span><span class="tag">IntelliSense</span>
+      </div>
+    </a>
+
+    <a href="fhir-vendor-platform.html" target="_blank" rel="noopener"
+       style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px);
+              text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:all .2s;"
+       onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'"
+       onmouseout="this.style.borderColor='';this.style.transform=''">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:38px;height:38px;background:var(--accent2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+        </div>
+        <div style="font-size:clamp(14px,1.6vw,16px);font-weight:600;color:var(--ink);">Vendor Platform</div>
+        <span style="margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.08em;">LAB / RADIOLOGY</span>
+      </div>
+      <p style="font-size:clamp(12px,1.3vw,13px);color:var(--muted);line-height:1.6;">Receive orders in real time. Build DiagnosticReport bundles for lab, radiology, pathology. Attach DICOM, PDF, HL7 v2 files. Send structured Observation results back to the client.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="tag">DiagnosticReport</span><span class="tag">Bundle</span><span class="tag">Observation</span><span class="tag">FHIR Composer</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Feature grid -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;" class="reveal">
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px;">VALIDATOR</div>
+      <div style="font-size:clamp(13px,1.4vw,14px);font-weight:600;color:var(--ink);margin-bottom:4px;">Live HL7 Validation</div>
+      <div style="font-size:12px;color:var(--muted);">Calls hapi.fhir.org — same engine as inferno.healthit.gov</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px;">INTELLISENSE</div>
+      <div style="font-size:clamp(13px,1.4vw,14px);font-weight:600;color:var(--ink);margin-bottom:4px;">VSCode-style Editor</div>
+      <div style="font-size:12px;color:var(--muted);">Ctrl+Space autocomplete for 18 FHIR R4 resource types</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px;">CODE SEARCH</div>
+      <div style="font-size:clamp(13px,1.4vw,14px);font-weight:600;color:var(--ink);margin-bottom:4px;">158+ Clinical Codes</div>
+      <div style="font-size:12px;color:var(--muted);">LOINC · SNOMED CT · ICD-10 · RxNorm · CPT · RadLex</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px;">US CORE 6.1</div>
+      <div style="font-size:clamp(13px,1.4vw,14px);font-weight:600;color:var(--ink);margin-bottom:4px;">US FHIR Standards</div>
+      <div style="font-size:12px;color:var(--muted);">USCDI v3 data classes, NPI, MRN, US sandbox endpoints</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px;">ZERO BACKEND</div>
+      <div style="font-size:clamp(13px,1.4vw,14px);font-weight:600;color:var(--ink);margin-bottom:4px;">Open as File</div>
+      <div style="font-size:12px;color:var(--muted);">localStorage + BroadcastChannel — no server, no npm</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px;">MIT LICENSE</div>
+      <div style="font-size:clamp(13px,1.4vw,14px);font-weight:600;color:var(--ink);margin-bottom:4px;">Fully Open Source</div>
+      <div style="font-size:12px;color:var(--muted);">Fork, modify, deploy for education or demonstrations</div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ═══════════════════════════════════════════ SKILLS ═══════════════════════════════════════════ -->
+<section id="skills" class="border-top">
+  <div class="section-eyebrow reveal">Technical Proficiency</div>
+  <h2 class="reveal">Skills &amp; Tools</h2>
+  <div class="skills-wrapper">
+    <div class="reveal">
+      <div class="skill-category">
+        <h3>Core Competencies</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>HL7 v2.5 Integration</span><span>Advanced</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.90"></div></div></div>
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>EMR / LIS Implementation</span><span>Advanced</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.90"></div></div></div>
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>FHIR (R4) Implementation</span><span>Advanced</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.85"></div></div></div>
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>Mirth Connect</span><span>Advanced</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.75"></div></div></div>
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>SQL &amp; Data Analysis</span><span>Advanced</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.87"></div></div></div>
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>Python / ETL Pipelines</span><span>Advanced</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.83"></div></div></div>
+          <div class="skill-bar-item"><div class="skill-bar-label"><span>ML &amp; AI Readiness</span><span>Intermediate</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.48"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="skill-category">
+        <h3>Technologies &amp; Platforms</h3>
+        <div class="tech-cloud">
+          <span class="tech-pill">HL7 v2.5</span>
+          <span class="tech-pill">FHIR (R4)</span>
+          <span class="tech-pill">JSON / XML / CSV</span>
+          <span class="tech-pill">Mirth Connect 4.5.2</span>
+          <span class="tech-pill">Allscripts EMR</span>
+          <span class="tech-pill">PACS / RIS / LIS</span>
+          <span class="tech-pill">TCP/IP / MLLP</span>
+          <span class="tech-pill">SQL (Oracle / MySQL)</span>
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Pandas / NumPy</span>
+          <span class="tech-pill">Data Mapping</span>
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">ICD-10 / SNOMED CT</span>
+          <span class="tech-pill">HIPAA / GDPR</span>
+          <span class="tech-pill">Machine Learning</span>
+          <span class="tech-pill">CRON / Quartz</span>
+          <span class="tech-pill">Regex</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════ EDUCATION ═══════════════════════════════════════════ -->
+<section id="education" class="border-top">
+  <div class="section-eyebrow reveal">Academic Background</div>
+  <h2 class="reveal">Education</h2>
+  <p class="section-desc reveal">Postgraduate and undergraduate qualifications spanning data science, computer science, and healthcare-focused technology across institutions in the UK and India.</p>
+  <div class="edu-grid">
+    <div class="edu-card featured reveal">
+      <div class="edu-degree-type">Postgraduate <span class="edu-degree-badge">MSc</span></div>
+      <h3>Master of Science in Data Science</h3>
+      <div class="edu-institution">Kingston University London</div>
+      <div class="edu-location">&#128205; London, UK</div>
+      <div class="edu-grade">Merit</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree-type">Postgraduate <span class="edu-degree-badge">PG Diploma</span></div>
+      <h3>Postgraduate Diploma in Data Science</h3>
+      <div class="edu-institution">International Institute of Information Technology</div>
+      <div class="edu-location">&#128205; Bangalore, India</div>
+      <div class="edu-grade">CGPA 3.29/4.0</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree-type">Undergraduate <span class="edu-degree-badge">BEng</span></div>
+      <h3>Bachelor of Engineering in Computer Science</h3>
+      <div class="edu-institution">NBN Sinhgad School of Engineering</div>
+      <div class="edu-location">&#128205; Pune, India</div>
+      <div class="edu-grade">CGPA 6.64/10.0</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ RESUME ═══════════════════════════════════════════ -->
+<section id="resume" class="border-top">
+  <div class="resume-wrapper">
+    <div class="resume-preview reveal">
+      <div class="resume-preview-header"><h3>Jay Thakur</h3><p>Integration Engineer &middot; Health Tech &middot; London, UK</p></div>
+      <div class="resume-preview-body">
+        <div class="resume-section-mini"><h4>Experience</h4><div class="resume-line medium"></div><div class="resume-line short"></div><div class="resume-line medium"></div><div class="resume-line shorter"></div></div>
+        <div class="resume-section-mini"><h4>Skills</h4><div class="resume-line short"></div><div class="resume-line medium"></div><div class="resume-line shorter"></div></div>
+        <div class="resume-section-mini"><h4>Education</h4><div class="resume-line medium"></div><div class="resume-line shorter"></div></div>
+        <div class="resume-section-mini"><h4>Certifications</h4><div class="resume-line short"></div><div class="resume-line shorter"></div></div>
+      </div>
+    </div>
+    <div class="resume-download-area reveal">
+      <div><div class="section-eyebrow">My Resume</div><h3>Download My Full<br><em style="font-style:italic;color:var(--accent)">Curriculum Vitae</em></h3></div>
+      <p>A comprehensive overview of my experience, skills, certifications, and project history in health-tech integration engineering.</p>
+      <div class="download-options">
+        <a href="JayThakur_Resume.pdf" download="JayThakur_Resume.pdf" class="download-btn"><div class="download-btn-icon pdf-icon">&#128196;</div><div class="download-btn-info"><strong>Download as PDF</strong><span>Best for sharing</span></div><span class="download-btn-arrow">&#8595;</span></a>
+        <a href="JayThakur_Resume.docx" download="JayThakur_Resume.docx" class="download-btn"><div class="download-btn-icon doc-icon">&#128221;</div><div class="download-btn-info"><strong>Download as Word (.docx)</strong><span>Editable format</span></div><span class="download-btn-arrow">&#8595;</span></a>
+      </div>
+      <div class="resume-last-updated">Last updated February 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ ABOUT ═══════════════════════════════════════════ -->
+<div id="about">
+  <div class="about-visual reveal">
+    <div class="about-card-main">
+      <div class="avatar-placeholder">IE</div>
+      <h3>Jay Thakur</h3>
+      <div class="role-label">Integration Engineer &middot; Clinical Integration Specialist</div>
+      <div class="cert-badges">
+        <span class="cert-badge">HL7 FHIR Specialist</span>
+        <span class="cert-badge">Mirth Connect Expert</span>
+        <span class="cert-badge">Data Analyst</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <div class="section-eyebrow">About Me</div>
+    <h2>Engineering <em style="font-style:italic;color:var(--accent)">interoperability</em> at the edge of care.</h2>
+    <p>I&apos;m an Integration Engineer with <strong>1+ years of experience</strong> designing and building the data infrastructure that powers modern healthcare &mdash; from community clinics to large health systems.</p>
+    <p>My work sits at the intersection of <strong>clinical workflows, regulatory compliance, and distributed systems</strong>. I believe that the right integration architecture doesn&apos;t just move data &mdash; it enables better patient outcomes.</p>
+    <p>Based in London, working with health-tech organisations globally. Passionate about <strong>open standards, FHIR adoption, and removing the friction from care delivery</strong>.</p>
+    <a href="#contact" class="btn-primary" style="margin-top:8px;">Work With Me &#8594;</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CONTACT ═══════════════════════════════════════════ -->
+<div id="contact">
+  <div class="section-eyebrow reveal" style="justify-content:center;">Get In Touch</div>
+  <h2 class="reveal">Let&apos;s Build Something<br><em style="font-style:italic;color:var(--accent)">Meaningful</em></h2>
+  <p class="reveal">Whether you&apos;re building an integration from scratch, navigating a complex EHR migration, or need a technical lead &mdash; I&apos;d love to hear about your project.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:contact@jaythakur.com" class="btn-primary">Email Me</a>
+    <a href="https://www.linkedin.com/in/jaythakur37/" class="btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/JyThakur" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 &mdash; Integration Engineer, Clinical Integration Specialist</p>
+  <p>Built with care &middot; London, UK</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  'use strict';
+
+  /* ── Mobile Nav ─────────────────────────────── */
+  var burger=document.getElementById('navBurger');
+  var drawer=document.getElementById('navDrawer');
+  var backdrop=document.getElementById('navBackdrop');
+  var open=false;
+  function openMenu(){open=true;burger.classList.add('is-open');drawer.classList.add('is-open');backdrop.classList.add('is-open');burger.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');}
+  function closeMenu(){open=false;burger.classList.remove('is-open');drawer.classList.remove('is-open');backdrop.classList.remove('is-open');burger.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');}
+  burger.addEventListener('click',function(e){e.stopPropagation();open?closeMenu():openMenu();});
+  var links=drawer.querySelectorAll('.drawer-link');
+  for(var i=0;i<links.length;i++){links[i].addEventListener('click',closeMenu);}
+  backdrop.addEventListener('click',closeMenu);
+  window.addEventListener('resize',function(){if(window.innerWidth>768&&open){closeMenu();}});
+  document.addEventListener('keydown',function(e){if((e.key==='Escape'||e.keyCode===27)&&open){closeMenu();}});
+
+  /* ── Scroll Reveal ─────────────────────────────── */
+  var revEls=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var ro=new IntersectionObserver(function(entries){entries.forEach(function(entry,i){if(entry.isIntersecting){entry.target.style.transitionDelay=(i*0.04)+'s';entry.target.classList.add('visible');ro.unobserve(entry.target);}});},{threshold:0.08});
+    revEls.forEach(function(el){ro.observe(el);});
+  }else{revEls.forEach(function(el){el.classList.add('visible');});}
+
+  /* ── Skill Bars ─────────────────────────────── */
+  var sbars=document.querySelectorAll('.skill-bars');
+  if('IntersectionObserver' in window){
+    var bo=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.querySelectorAll('.skill-bar-fill').forEach(function(bar){bar.style.width=(parseFloat(bar.getAttribute('data-width'))*100)+'%';bar.classList.add('animate');});bo.unobserve(entry.target);}});},{threshold:0.2});
+    sbars.forEach(function(sb){bo.observe(sb);});
+  }else{sbars.forEach(function(sb){sb.querySelectorAll('.skill-bar-fill').forEach(function(bar){bar.style.width=(parseFloat(bar.getAttribute('data-width'))*100)+'%';bar.classList.add('animate');});});}
+
+  /* ── Project Modal ─────────────────────────────── */
+  var projects=[
+    {num:'01',title:'Healthcare EMR Integration — Allscripts Implementation',company:'Sutherland Healthcare Solutions · Implementation Engineer',overview:'Led end-to-end delivery of healthcare EMR integrations enabling real-time clinical and EDI-aligned administrative data exchange across 15+ provider sites, acting as both business analyst and client interface.',achievements:['Delivered healthcare EMR integrations enabling real-time clinical and EDI-aligned administrative data exchange across 15+ provider sites.','Acted as a business analyst and client interface, translating provider requirements into HL7 interface designs and validation criteria.','Executed QA testing, message validation, and data analytics to ensure accuracy, completeness, and interoperability compliance.','Reduced post-go-live defects by 25% through structured QA workflows and standardised documentation.','Configured secure SFTP and API-based connectivity for real-time HL7 data exchange across lab systems and EMR platforms using JSON and XML payload structures.'],tags:['HL7','Allscripts EMR','PACS/RIS','SQL','SFTP','API','JSON / XML','QA Testing','HIPAA']},
+    {num:'02',title:'Strategic EHR Interoperability & Vendor Alignment',company:'Sutherland Healthcare Solutions · Implementation Engineer',overview:'Analysed vendor specifications and business requirements to design and deliver HL7 interfaces aligned with healthcare EDI and interoperability workflows.',achievements:['Analysed vendor specifications and business requirements to design HL7 interfaces aligned with healthcare EDI and interoperability workflows.','Performed systematic QA testing and data analytics to validate ADT, ORU, and DFT transactions.','Served as a client-facing coordination point between vendors, QA teams, and technical stakeholders to resolve integration issues.','Maintained SDLC artifacts including business requirement documents, QA validation evidence, and change control logs.','Reduced onboarding timelines by 25% through standardised interface mapping artifacts and audit-ready documentation.'],tags:['HL7','ADT / ORU / DFT','Vendor Analysis','QA Testing','SQL','SDLC','Change Control','Interoperability']},
+    {num:'03',title:'Mirth Connect 4.5.2: Real-Time HL7 Pipeline',company:'Independent Technical Project',overview:'Architected a centralized Mirth Connect 4.5.2 hub to synchronize real-time HL7 (ADT/ORU) data across HIS, LIS, and Billing. Engineered automated XML/CSV/PDF transformations, channel-to-channel routing, and advanced metadata filtering for enterprise-grade interoperability.',achievements:['Designed and implemented real-time validation and routing of HL7 messages (ADT, ORU) across multiple hospital systems.','Developed multiple integration channels using TCP Listener, File Reader/Writer, and Channel Writer connectors.','Implemented data transformation workflows converting HL7 to XML, CSV, PDF, and JSON formats.','Enabled channel-to-channel routing to support scalable and modular architecture.','Created custom metadata fields for enhanced dashboard filtering and advanced message tracking.','Configured error handling with try-catch blocks, logging mechanisms, and reprocessing capabilities.','Set up scheduled polling using CRON and interval-based triggers for bulk file processing.'],tags:['Mirth Connect 4.5.2','HL7 (ADT/ORU)','JavaScript','XML','JSON','TCP/IP (LLP)','File Polling (CRON)','Custom Metadata','PDF Generation']},
+    {num:'04',title:'AI Training Data Pipeline — Healthcare QA Readiness',company:'Sigma AI Data Ltd · Data Annotation Specialist',overview:'Built and maintained data integrity pipelines for AI model training datasets, applying rigorous quality assurance techniques.',achievements:['Led live data interpretation using annotation systems, maintaining an error rate below 5%.','Enhanced dataset integrity for AI training, improving reliability by over 40% across projects.','Optimised audio annotation with data classification and tagging, processing 2,500 files daily.','Achieved 98% transcription accuracy, reducing project turnaround times by 30%.'],tags:['Python','Data Annotation','AI Training Data','Data Classification','Audio Annotation','Data Quality','QA']},
+    {num:'05',title:'ETL & ML Pipeline — Population Data Analysis',company:'Prodigy InfoTech · Data Science Intern',overview:'Designed and executed end-to-end ETL and ML pipelines to analyse population distribution and predict behavioural outcomes.',achievements:['Extracted, transformed, and loaded structured data for analysis, ensuring high data integrity and accuracy.','Visualised cleaned data using Python, Pandas, NumPy, Matplotlib, and Seaborn across 100+ countries.','Applied a Decision Tree Classifier with 85% accuracy on demographic and behavioural data.','Performed sentiment analysis using Python and basic NLP techniques.'],tags:['Python','Pandas','NumPy','Matplotlib','Seaborn','Decision Tree','NLP','ETL','Machine Learning']},
+    {num:'06',title:'Marketing Mix Modelling & Campaign Analytics',company:'Kantar Analytics Practice · Data Analyst',overview:'Applied advanced statistical analysis and data-driven insights to optimise marketing spend and campaign performance.',achievements:['Analysed marketing campaigns using data assessment, increasing sales by 12% and 8% across industries.','Applied advanced Excel functions and statistical analysis to improve Marketing Mix Model accuracy by 20%.','Optimised marketing ROI by $500K through strategic budget reallocations based on identified KPIs.','Delivered actionable insights that enhanced strategic decision-making and boosted brand awareness by 15%.'],tags:['Excel','Statistical Analysis','Marketing Mix Model','KPI Analysis','Data Visualisation','Campaign Analytics']},
+    {num:'07',title:'FHIR R4 — Self-Driven Learning & Implementation Exploration',company:'Independent Technical Project · Healthcare Interoperability',overview:'Independently designed and built a fully browser-based, zero-backend two-platform FHIR R4 practice environment. The project simulates the complete clinical order-to-result workflow between an EHR (Client Platform) and a lab/radiology system (Vendor Platform) using real, HL7-validated FHIR resources — no server, no installation required.',achievements:['Architected a cross-tab messaging layer using BroadcastChannel API and localStorage to deliver real-time FHIR ServiceRequests from a simulated EHR to a lab/vendor platform, with DiagnosticReport Bundles and Observation results returned automatically.','Built a fully functional FHIR R4 IntelliSense engine (VSCode-style Ctrl+Space autocomplete) with schema definitions for 18 resource types, value set completions, and auto-injection of required fields — operating entirely in the browser with no external dependencies.','Implemented comprehensive patient demographics parsing from real FHIR Patient resources — correctly extracting display name from name[] HumanName arrays, MRN from identifier[] using type code MR, DOB, gender, address, and emergency contact.','Integrated live HL7 FHIR validation via hapi.fhir.org ($validate endpoint) — the same engine used by inferno.healthit.gov — returning real OperationOutcome resources with error, warning, and information issues.','Built a multi-terminology clinical code search engine covering 158+ codes across LOINC, SNOMED CT, ICD-10, RxNorm, CPT, and RadLex, with fuzzy/normalised matching so queries like "Xray" match "X-ray" and "CTScan" matches "CT scan", alias expansion (CBC, LFT, TFT, ECG), and inline match highlighting.','Applied US Core 6.1 profiles throughout — including USCDI v3 data classes, correct system URIs (http://loinc.org, http://snomed.info/sct, http://terminology.hl7.org), NPI for Practitioner, and MRN identifier type coding — with sandbox endpoint references for Cerner, Epic, Azure Health Data Services, and AWS HealthLake.','Published as open-source on GitHub with full README documentation, MIT licence, and GitHub Pages deployment — making it freely available to the FHIR learning community.'],tags:['FHIR R4','HL7','US Core 6.1','ServiceRequest','DiagnosticReport','Observation','Patient','Bundle','LOINC','SNOMED CT','ICD-10','REST APIs','JSON','BroadcastChannel','localStorage','JavaScript','GitHub Pages','Open Source','ONC / USCDI']}
+  ];
+
+  var projOverlay=document.getElementById('projOverlay');
+  var projClose=document.getElementById('projModalClose');
+  var projNum=document.getElementById('projModalNum');
+  var projTitle=document.getElementById('projModalTitle');
+  var projCompany=document.getElementById('projModalCompany');
+  var projOverview=document.getElementById('projModalOverview');
+  var projAchieves=document.getElementById('projModalAchievements');
+  var projTags=document.getElementById('projModalTags');
+
+  function openProject(idx){var p=projects[idx];projNum.textContent='Project '+p.num;projTitle.textContent=p.title;projCompany.textContent=p.company;projOverview.textContent=p.overview;projAchieves.innerHTML='';p.achievements.forEach(function(a){var li=document.createElement('li');li.textContent=a;projAchieves.appendChild(li);});projTags.innerHTML='';p.tags.forEach(function(t){var span=document.createElement('span');span.className='tag';span.textContent=t;projTags.appendChild(span);});projOverlay.classList.add('is-open');projOverlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';projClose.focus();}
+  function closeProject(){projOverlay.classList.remove('is-open');projOverlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  document.querySelectorAll('.project-row[data-project]').forEach(function(btn){btn.addEventListener('click',function(){openProject(parseInt(this.getAttribute('data-project'),10));});});
+  projClose.addEventListener('click',closeProject);
+  projOverlay.addEventListener('click',function(e){if(e.target===projOverlay)closeProject();});
+  document.addEventListener('keydown',function(e){if((e.key==='Escape'||e.keyCode===27)&&projOverlay.classList.contains('is-open')){closeProject();}});
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Page Not Found</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0ede6;
+  --ink: #111410;
+  --accent: #1a6e52;
+  --accent2: #d4f0e3;
+  --muted: #7a7b74;
+  --card: #e8e4db;
+  --line: rgba(17,20,16,0.12);
+  --pulse: #27ae6e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 6vw, 80px);
+  overflow: auto;
+  position: relative;
+}
+
+/* Noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.4;
+}
+
+/* Big decorative blob */
+.blob {
+  position: fixed;
+  border-radius: 50% 30% 60% 40% / 40% 60% 30% 50%;
+  background: var(--accent2);
+  animation: morphBlob 10s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.blob-1 {
+  width: clamp(240px, 45vw, 560px);
+  height: clamp(240px, 45vw, 560px);
+  top: -80px; right: -100px;
+  opacity: 0.5;
+  animation-delay: 0s;
+}
+.blob-2 {
+  width: clamp(120px, 22vw, 280px);
+  height: clamp(120px, 22vw, 280px);
+  bottom: -60px; left: -60px;
+  opacity: 0.3;
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+@keyframes morphBlob {
+  0%,100% { border-radius: 50% 30% 60% 40% / 40% 60% 30% 50%; }
+  33%      { border-radius: 30% 60% 40% 70% / 60% 30% 70% 40%; }
+  66%      { border-radius: 60% 40% 30% 50% / 30% 70% 40% 60%; }
+}
+
+/* Main content */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  animation: fadeUp 0.7s cubic-bezier(0.23,1,0.32,1) both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 404 large number */
+.error-code {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(100px, 22vw, 200px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  position: relative;
+  display: inline-block;
+  margin-bottom: clamp(16px, 3vw, 28px);
+  animation: fadeUp 0.7s 0.05s cubic-bezier(0.23,1,0.32,1) both;
+}
+.error-code em {
+  font-style: italic;
+  color: var(--accent);
+}
+/* Subtle underline rule */
+.error-code::after {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin-top: 12px;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(9px, 1.2vw, 12px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(12px, 2vw, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation: fadeUp 0.7s 0.1s cubic-bezier(0.23,1,0.32,1) both;
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  height: 1px;
+  width: 36px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(12px, 2vw, 20px);
+  animation: fadeUp 0.7s 0.15s cubic-bezier(0.23,1,0.32,1) both;
+}
+
+.description {
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 440px;
+  margin: 0 auto clamp(28px, 5vw, 48px);
+  animation: fadeUp 0.7s 0.2s cubic-bezier(0.23,1,0.32,1) both;
+}
+
+/* Action buttons */
+.actions {
+  display: flex;
+  gap: clamp(10px, 2vw, 16px);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.7s 0.25s cubic-bezier(0.23,1,0.32,1) both;
+}
+
+.btn-primary {
+  padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: #145c43; transform: translateY(-2px); }
+
+.btn-outline {
+  padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.btn-outline:hover { background: var(--ink); color: var(--bg); transform: translateY(-2px); }
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:clamp(18px,3vw,32px) var(--pad-x);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+footer p{font-family:'DM Mono',monospace;font-size:clamp(9px,1.1vw,12px);color:var(--muted);letter-spacing:.05em}
+
+/* Quick links */
+.quick-links {
+  margin-top: clamp(36px, 6vw, 60px);
+  margin-bottom: clamp(30px, 6vw, 50px);
+  padding-top: clamp(24px, 4vw, 36px);
+  border-top: 1px solid var(--line);
+  animation: fadeUp 0.7s 0.32s cubic-bezier(0.23,1,0.32,1) both;
+}
+.quick-links-label {
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(9px, 1.1vw, 11px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.quick-links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.quick-link {
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(10px, 1.2vw, 12px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: var(--card);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.quick-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent2); }
+
+/* Live indicator in corner */
+.corner-tag {
+  position: fixed;
+  top: clamp(14px, 3vw, 28px);
+  left: clamp(14px, 4vw, 40px);
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(9px, 1.1vw, 11px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.corner-tag:hover { opacity: 0.7; }
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--pulse);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* Floating signal lines decoration */
+.signal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+.signal-left {
+  left: clamp(16px, 4vw, 48px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.signal-right {
+  right: clamp(16px, 4vw, 48px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.signal-line {
+  height: 1px;
+  background: var(--line);
+  border-radius: 1px;
+  animation: signalPulse 3s ease-in-out infinite;
+}
+.signal-line:nth-child(1) { width: 32px; animation-delay: 0s; }
+.signal-line:nth-child(2) { width: 20px; animation-delay: 0.4s; }
+.signal-line:nth-child(3) { width: 28px; animation-delay: 0.8s; }
+.signal-line:nth-child(4) { width: 16px; animation-delay: 1.2s; }
+.signal-line:nth-child(5) { width: 24px; animation-delay: 1.6s; }
+@keyframes signalPulse {
+  0%,100% { opacity: 0.3; }
+  50%      { opacity: 0.9; }
+}
+
+@media (max-width: 480px) {
+  .signal { display: none; }
+  .actions { flex-direction: column; align-items: center; }
+  .actions a { width: 100%; max-width: 280px; justify-content: center; }
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+
+/* BREAKPOINTS */
+@media(max-width:1200px){.expertise-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){.nav-links{gap:clamp(10px,1.8vw,22px)}.project-row{grid-template-columns:38px 1fr}.project-tags{display:none}.expertise-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .nav-links{display:none}.nav-burger{display:flex}
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:calc(var(--nav-h) + var(--space-md))}
+  .hero-bg-shape{display:none}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .expertise-grid{grid-template-columns:repeat(2,1fr)}
+  .project-row{grid-template-columns:34px 1fr;gap:12px}.project-tags{display:none}
+  .skills-wrapper{grid-template-columns:1fr;gap:var(--space-lg)}
+  #about{grid-template-columns:1fr}
+  .resume-wrapper{grid-template-columns:1fr}
+  .contact-links{flex-direction:column;align-items:center}
+  .contact-links a{width:100%;max-width:320px;text-align:center}
+  footer{flex-direction:column;text-align:center;gap:8px}
+}
+@media(max-width:600px){.expertise-grid{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(2,1fr);gap:10px}.timeline{padding-left:24px}.timeline-dot{left:-30px}.timeline-body{padding:16px 18px}.about-card-main{padding:22px 18px}.resume-preview-header{padding:20px}.resume-preview-body{padding:18px 20px}.edu-grid{grid-template-columns:1fr}}
+@media(max-width:480px){:root{--pad-x:16px}h1{font-size:clamp(26px,9vw,38px)}h2{font-size:clamp(22px,7.5vw,32px)}.hero-ctas{flex-direction:column}.hero-ctas a{width:100%;text-align:center}.hero-stats{gap:10px}.stat-num{font-size:clamp(20px,7vw,28px)}.timeline-meta{flex-direction:column;align-items:flex-start;gap:5px}.nav-logo{font-size:10px}}
+@media(max-width:360px){:root{--pad-x:12px}h1{font-size:clamp(22px,9vw,30px)}.hero-stats{gap:8px}.stat-num{font-size:20px}.expertise-grid{grid-template-columns:1fr}.project-row{grid-template-columns:28px 1fr;gap:8px}.cert-badges{flex-direction:column}.nav-logo{font-size:9px}.download-btn-info span{display:none}.timeline{padding-left:18px}.timeline-dot{left:-24px;width:10px;height:10px}}
+@media(hover:none) and (pointer:coarse){.btn-primary:hover,.btn-outline:hover{transform:none}.stat-card:hover{transform:none}.expertise-item:hover{background:var(--bg)}.project-row:hover{background:var(--bg)}.download-btn:hover{transform:none}.tech-pill:hover{border-color:var(--line);color:var(--muted)}.download-btn-arrow{opacity:1}.nav-drawer a{min-height:48px}.btn-primary,.btn-outline{min-height:48px;display:inline-flex;align-items:center;justify-content:center}.download-btn{min-height:56px}.edu-card:hover{transform:none;box-shadow:none}}
+@media print{nav.main-nav,.nav-drawer,.nav-backdrop,.hero-bg-shape{display:none!important}body{font-size:11pt;color:#000;background:#fff}h1,h2,h3{color:#000}.reveal{opacity:1!important;transform:none!important}section,#about,#contact{padding:20pt 0!important;max-width:100%!important}.expertise-grid{grid-template-columns:repeat(2,1fr)}.skills-wrapper,.resume-wrapper{grid-template-columns:1fr 1fr}#about{grid-template-columns:1fr 1fr!important}.timeline{padding-left:16pt}footer{border-top:1pt solid #ccc}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+@media(forced-colors:active){.tag,.cert-badge,.timeline-period{border:1px solid ButtonText}.download-btn{border:1px solid ButtonText}.skill-bar-fill{forced-color-adjust:none;background:Highlight}}
+@media(max-width:900px){.edu-grid{grid-template-columns:1fr 1fr}}
+
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- Corner logo link back to portfolio -->
+<a href="index.html" class="corner-tag">
+  <span class="live-dot"></span>
+  [ Integration Engineer ]
+</a>
+
+<!-- Decorative signal lines -->
+<div class="signal signal-left" aria-hidden="true">
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+</div>
+<div class="signal signal-right" aria-hidden="true">
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+  <div class="signal-line"></div>
+</div>
+
+<div class="container">
+
+  <div class="eyebrow">Error</div>
+
+  <div class="error-code">4<em>0</em>4</div>
+
+  <h1>Page Not Found</h1>
+
+  <p class="description">
+    Looks like this route doesn't exist &mdash; the endpoint returned nothing.
+    Let's get you back to a working connection.
+  </p>
+
+  <div class="actions">
+    <a href="index.html" class="btn-primary">
+      &#8592; Back to Portfolio
+    </a>
+    <a href="index.html#contact" class="btn-outline">
+      Get in Touch
+    </a>
+  </div>
+
+  <div class="quick-links">
+    <div class="quick-links-label">Or jump to a section</div>
+    <div class="quick-links-grid">
+      <a href="index.html#expertise"  class="quick-link">Expertise</a>
+      <a href="index.html#experience" class="quick-link">Experience</a>
+      <a href="index.html#projects"   class="quick-link">Projects</a>
+      <a href="index.html#skills"     class="quick-link">Skills</a>
+      <a href="index.html#education"  class="quick-link">Education</a>
+      <a href="index.html#resume"     class="quick-link">Resume</a>
+      <a href="index.html#about"      class="quick-link">About</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 &mdash; Integration Engineer, Clinical Integration Specialist</p>
+  <p>Built with care &middot; London, UK</p>
+</footer>
+
+</body>
+</html>
